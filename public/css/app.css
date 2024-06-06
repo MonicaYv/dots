@@ -1,0 +1,277 @@
+.login-screen{
+  position: relative;
+}
+
+.left-background{
+background-image: url('/public/images/Wallpaper.png');
+border-top-right-radius: 100px;
+
+}
+
+.right-background{
+background-image: url('/public/images/Wallpaper.png');
+border-top-left-radius: 100px;
+}
+
+.login-container{
+  position: absolute;
+  top: 50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  background-color: rgba(229, 224, 224, 0.292);
+    backdrop-filter: blur(20px);
+    height: 500px;
+}
+
+.vector-img{
+  position: absolute;
+  z-index: -1;
+}
+
+.right-container input{
+  padding: 4px;
+  width: 100%;
+  margin-bottom: 10px;
+  outline: none;
+  border-radius: 10px;
+  background-color: rgb(142, 140, 140);
+  color: black;
+}
+
+#login-btn{
+  background-color: black;
+  color: white;
+  margin-top: 10px;
+}
+
+input::placeholder {
+  color: #000;
+}
+
+
+
+/* Global CSS */
+
+body {
+  margin: 0;
+  line-height: normal;
+  height:inherit;
+  width:inherit;
+  overflow:hidden;
+}
+
+:root {
+/*images */
+--desktop-background:url('/public/images/Wallpaper.png');
+
+  /* fonts */
+  --font-roboto: Roboto;
+
+  /* font sizes */
+  --font-size-5xs: 8px;
+  --font-size-xl: 20px;
+  --font-size-base: 16px;
+
+  /* Colors */
+  --color-white: #fff;
+  --color-gray-100: #282828;
+  --color-gray-200: rgba(0, 0, 0, 0.16);
+  --color-black: #000;
+  --color-tomato: #ff453a;
+  --color-dimgray: #4d4d4d;
+
+  /* Gaps */
+  --gap-xl: 20px;
+
+  /* Paddings */
+  --padding-190xl: 212px;
+  --padding-xl: 20px;
+  --padding-85xl: 104px;
+  --padding-31xl: 50px;
+  --padding-6xl: 25px;
+  --padding-6xs: 7px;
+  --padding-7xs: 6px;
+  --padding-smi: 13px;
+  --padding-3xs: 10px;
+  --padding-9xs: 4px;
+  --padding-8xl: 27px;
+  --padding-3xl: 22px;
+  --padding-17xl: 36px;
+  --padding-11xs: 2px;
+  --padding-12xs: 1px;
+  --padding-16xl: 35px;
+  --padding-10xs: 3px;
+
+
+  /* Border radiuses */
+  --br-xl: 20px;
+  --br-81xl: 100px;
+  --br-10xs: 3px;
+  --br-8xs: 5px;
+  --br-3xs: 10px;
+}
+
+
+/* Dashboard */
+
+.dashboard {
+  background-image: url("/public/images/Wallpaper.png");
+  background-size: 100% 100%;
+  position: relative;
+}
+
+.dashboard .clock {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dashboard .sidebar {
+  background-color: rgb(186, 180, 180);
+  position: absolute;
+  top: 35%;
+  right: 15px;
+}
+
+.Administrator {
+  width: 400px;
+  position: absolute;
+  right: 90px;
+  bottom: 70px;
+  background-color: rgba(255, 255, 255, 0.901);
+}
+
+.dashboard .Notification {
+  position: absolute;
+  right: 80px;
+  background-color: rgba(255, 255, 255, 0.901);
+}
+
+.hidden {
+  display: none;
+}
+
+ .tooltip{
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #ffc400;
+    bottom: 60px;
+    z-index: 999;
+    display: none;
+}
+
+
+.bubble-bottom-left:before{
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 24px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-bottom-right-radius: 90%;
+    left: 40px;
+    bottom: -5px;
+    background-color: #ffc400;
+
+}
+
+.bubble-content{
+  padding: 30px;
+}
+
+.bubble-content h1{
+  font-size: 2vw;
+  font-weight: 500;
+}
+
+.bubble-content p{
+  font-size: 1vw;
+}
+
+footer{
+  background-color: rgba(255, 255, 255, 0.752);
+}
+        .popup {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 70%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 50;
+        }
+        .minimized {
+            height: 40px;
+            width: 200px;
+            bottom: 10px;
+            left: 10px;
+            top: auto;
+            transform: none;
+        }
+        .maximized {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform: none;
+        }
+    .maximize-icon {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            z-index: 1;
+            width: 3%;
+        }
+        
+        .context-menu {
+  position: absolute;
+  z-index: 1000;
+  width: 200px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.context-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.context-menu ul li {
+  padding: 0px 0;
+}
+.context-menu ul li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  padding: 8px 10px;
+}
+.context-menu ul li a:hover {
+ background: #FDCF01;
+}
+
+.desktop-sidebar{
+  height: calc(100% - 60px);
+}
+
+.sidebar-content{
+  height: calc(100% - 80px);
+  background-image: url("/images/Rectanglebg.png");
+}
+
+.desktop-apps{
+  height: calc(100% - 108px);
+}
+

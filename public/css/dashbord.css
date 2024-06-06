@@ -1,0 +1,98 @@
+.dashboard {
+  background-image: url("/images/Wallpaper.png");
+  background-size: 100% 100%;
+  position: relative;
+}
+
+.dashboard .clock {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dashboard .sidebar {
+  background-color: rgb(186, 180, 180);
+  position: absolute;
+  top: 35%;
+  right: 15px;
+}
+
+.dashboard .Administrator {
+  width: 400px;
+  position: absolute;
+  right: 90px;
+  bottom: 70px;
+  background-color: rgba(255, 255, 255, 0.901);
+}
+
+.dashboard .Notification {
+  position: absolute;
+  right: 80px;
+  top: 50px;
+  background-color: rgba(255, 255, 255, 0.901);
+}
+
+.hidden {
+  display: none;
+}
+
+.dashboard .tooltip{
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #ffc400;
+    bottom: 60px;
+    z-index: 999;
+    display: none;
+}
+
+
+.bubble-bottom-left:before{
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 24px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-bottom-right-radius: 90%;
+    left: 40px;
+    bottom: -5px;
+    background-color: #ffc400;
+
+}
+
+.bubble-content{
+  padding: 30px;
+}
+
+.bubble-content h1{
+  font-size: 2vw;
+  font-weight: 500;
+}
+
+.bubble-content p{
+  font-size: 1vw;
+}
+
+footer{
+  background-color: rgba(255, 255, 255, 0.648);
+  height: 60px;
+}
+
+.desktop-sidebar{
+  height: calc(100% - 60px);
+}
+
+.sidebar-content{
+  height: calc(100% - 80px);
+  background-image: url("/images/Rectanglebg.png");
+}
+
+.desktop-apps{
+  height: calc(100% - 108px);
+}
