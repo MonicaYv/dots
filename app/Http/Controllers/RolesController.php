@@ -37,17 +37,26 @@ class RolesController extends Controller
         return view('roles.roles',compact('roles'));
     }
 
+    public function rolesList()
+    {
+        $roles = Roles::get();
+        $role = view('appendview.roleslist')->with('roles',$roles)->render();
+        return response()->json($role);
+    }
+
     public function add()
     {
        return view('roles.add');
     }
 
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-       $role = Roles::find($id);
-       $role->file_manage_settings = explode(",", $role->file_manage_settings);
-       $role->user_settings = explode(",", $role->user_settings);
-       return view('roles.edit',compact('role'));
+        $id = $request->id;
+        $role = Roles::find($id);
+        $role->file_manage_settings = explode(',',$role->file_manage_settings);
+        $role->user_settings = explode(',',$role->user_settings);
+        $roles = view('appendview.editroles')->with('role',$role)->render();
+        return response()->json($roles);
     }
 
     public function create(Request $request)
@@ -64,7 +73,7 @@ class RolesController extends Controller
         $input['file_manage_settings'] = implode(',', $input['file_manage_settings']);
         $input['user_settings'] = implode(',', $input['user_settings']);
         $role = Roles::create($input);
-         return redirect()->route('roles');
+         return redirect()->route('rolesadmin');
            
     }
 
@@ -82,10 +91,10 @@ class RolesController extends Controller
         $role = Roles::find($id);
 
         if ($updated) {
-            return redirect()->route('roles');
+            return redirect()->route('rolesadmin');
         } else {
             // Handle update failure (e.g., log the error or return a specific error message)
-            return redirect()->route('roles');
+            return redirect()->route('rolesadmin');
         }
     }
 
@@ -93,7 +102,7 @@ class RolesController extends Controller
     {
         
         Roles::where('id', $id)->delete();
-        return redirect()->route('roles');
+        return redirect()->route('rolesadmin');
          
     
     }

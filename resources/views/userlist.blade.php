@@ -43,23 +43,25 @@
             
             
 
-          <!--   <div class="relative">
+            <div class="relative">
                 <button onclick="toggleDropdown('dropdownOptions-1')" class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-4 py-1 mr-2">
-                        <span class="">Group 1</span>
+                        <span class="">Groups</span>
                         <span class="pb-1 pl-2">
                             <i class="fas fa-sort-down"></i>
                         </span>
                 </button>
                 <div id="dropdownOptions-1" class="dropdown-options absolute top-0 left-0 mt-10 bg-white border border-gray-300 rounded shadow-md dropdown-options-custom-width">
                     <div class="p-2 dropdown-options-custom-width">
-                        <a href="#" class="block py-1">Edit</a>
-                        <a href="#" class="block py-1">Set space size batches</a>
-                        <a href="#" class="block py-1"></a>Add sub-group</a>
-                        <a href="#" class="block py-1"></a>New user</a>
+                         @foreach($groups as $group)
+                        <a href="#" class="block py-1"></a>{{ $group->name }}&nbsp;&nbsp;<i class="ri-pencil-fill"></i>
+                        <button data-id="{{ $group->id }}" class="group-edit bg-yellow-400 text-white py-2 px-4 rounded-md">Edit</button>
+                        </a>
+                        @endforeach
+                        <a href="#" data-modal-target="group-modal" data-modal-toggle="group-modal" class="block py-1"><i class="ri-add-circle-fill"></i>Add Group</a>
                     </div>
                 </div>
             </div>
-     -->
+    
             <!-- Dropdown 2 -->
             <!-- <div class="relative">
                 <button onclick="toggleDropdown('dropdownOptions-2')" class="flex items-center dropdown-toggle focus:border-yellow-500 border border-gray-300 rounded px-4 py-1 mr-2">
@@ -168,12 +170,12 @@
                 <form class="max-w-sm mx-auto" action="{{ route('user-create') }}" method="POST">
                     @csrf
                       <div class="mb-5">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name (username)</label>
-                        <input type="text" name="name" id="email" class="p-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="username" required />
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name (username)</label>
+                        <input type="text" name="name" id="name" class="p-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="username" required />
                       </div>
                       <div class="mb-5">
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nick-Name</label>
-                        <input type="text"  name="nickName" id="email" class="p-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="" required />
+                        <label for="nickName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nick-Name</label>
+                        <input type="text"  name="nickName" id="nickName" class="p-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="" required />
                       </div>
                       <div class="mb-5">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
@@ -185,11 +187,11 @@
                       </div>
                        <div class="mb-5">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Space-Size</label>
-                        <input type="text" name="sizeMax" id="email" class="p-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="alloted space" required />
+                        <input type="text" name="sizeMax" id="sizeMax" class="p-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="alloted space" required />
                       </div>
                       <div class="mb-5">
-                      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
-                      <select id="countries" name="roleID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      <label for="roleID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+                      <select id="roleID" name="roleID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                          @foreach($roles as $role)
                          <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -197,8 +199,8 @@
                       </select>
                     </div>
                     <div class="mb-5">
-                      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Group</label>
-                      <select id="countries" name=" groupID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      <label for="groupID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Group</label>
+                      <select id="groupID" name=" groupID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
                          @foreach($groups as $group)
                         <option value="{{ $group->id }}">{{ $group->name }}</option>
@@ -212,18 +214,84 @@
             </div>
             <!-- Modal footer -->
             <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-               <!--  <button data-modal-hide="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button> -->
-                <!-- <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Cancel</button> -->
             </div>
         </div>
     </div>
 </div>
+
+
+<!-- Group Add modal--->
+<div id="group-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Add Group
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="group-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-4 md:p-5 space-y-4">
+                <form class="max-w-sm mx-auto" action="{{ route('group-create') }}" method="POST">
+                    @csrf
+                      <div class="mb-5">
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                        <input type="text" name="name" id="name" class="p-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="group-name" required value="" />
+                      </div>
+                      <div class="mb-5">
+                        <label for="sizeUse" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Size(GB)</label>
+                        <input type="text"  name="sizeUse" id="sizeUse" value="" class="p-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Space for use" required />
+                      </div>
+                      <div class="mb-5">
+                      <label for="permissionID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Permissions</label>
+                      <select id="roleID" name="permissionID" class="p-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+                         @foreach($permissions as $permission)
+                         <option value="{{ $permission->id }}">{{ $permission->name }}</option>
+                         @endforeach
+                      </select>
+                    </div>
+                      
+                      <button type="submit" class="p-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End group add modal --->
+
+<!-- Group Edit modal -->
+
+<!--End Group Edit-Modal  -->
+<div id="group-edit-div">
+
+</div>
+
+<!-- Edit modal -->
+        <div id="user-edit-div">
+            
+        </div>
+<!-- End Edit modal -->
 @endsection
 
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="{{ asset($constants['JSFILEPATH'].'setting.js') }}"></script>
     <script>
+
+    // Initial population of the table
+            populateTable();
+
     function toggleDropdown(id) {
         var dropdownOptions = document.getElementById(id);
         var allDropdowns = document.querySelectorAll('.dropdown-options');
@@ -264,31 +332,26 @@
         var clickedItem = document.getElementById(elementId);
         clickedItem.classList.add('dropdown-item-active');
     }
-     
-        const tableData = @php echo $users @endphp;  
-        console.log(tableData);
+      
+
             // Function to populate the table with data
             function populateTable(data) {
-                const tableBody = document.getElementById('searchableTableBody');
-                tableBody.innerHTML = ''; // Clear previous data
-        
-                data.forEach(row => {
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-300">${row.name}</td>
-                        <td class="py-4 whitespace-no-wrap border-b border-gray-300">${row.roles.name}</td>
-                        <td class="py-4 whitespace-no-wrap border-b border-gray-300">
-                            <input type="range" class="w-full" min="0" max="500" value="${row.sizeMax}">
-                            <span class="block text-sm">${row.sizeMax}</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-300">${row.group.name}</td>
-                    `;
-                    tableBody.appendChild(newRow);
-                });
+               const searchTerm = '';
+                const listroute = @json(route('user-list'));
+                $.ajax({
+                            url: listroute,
+                            method: 'GET',
+                            data: { searchTerm:searchTerm },
+                            success: function (response) {
+                                // Update the app list container with the updated list
+                                $('#searchableTableBody').html(response);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
             }
         
-            // Initial population of the table
-            populateTable(tableData);
         
             // Search functionality
             const searchInput = document.getElementById('searchInput');
@@ -301,6 +364,29 @@
                 );
                 populateTable(filteredData);
             });
+
+          //edit group popup js 
+                    const editgrouproute = @json(route('group-edit'));
+
+                     $('.group-edit').on('click', function (e) {
+                       e.preventDefault();
+                       
+                    id = $(this).attr("data-id");
+                    $.ajax({
+                            url: editgrouproute,
+                            method: 'GET',
+                            data: {id:id},
+                            success: function (response) {
+                                // Update the app list container with the updated list
+                                $('#group-edit-div').html(response);
+                                $('.group-edit-modal').removeClass('hidden');
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
+                     
+                    });
 
 </script>
 @endsection

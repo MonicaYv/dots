@@ -43,8 +43,16 @@ class UserController extends Controller
     {
         $groups = Group::get();
         $roles = Roles::get();
+        $permissions = Permissions::get();
         $users = User::with(['roles', 'group'])->get();
-        return view('userlist',compact('groups','roles','users'));
+        return view('userlist',compact('groups','roles','users','permissions'));
+    }
+
+     public function usersList()
+    {
+        $users = User::get();
+        $user = view('appendview.userlist')->with('users',$users)->render();
+        return response()->json($user);
     }
 
     public function add()
@@ -74,12 +82,15 @@ class UserController extends Controller
         return redirect()->route('useradmin');  
     }
 
-    public function edit(string $id)
+    public function edit(Request $request)
     {
         $groups = Group::get();
         $roles = Roles::get();
+
+        $id = $request->id;
         $user = User::find($id);
-       return view('users.edit',compact('groups','roles','user'));
+        $users = view('appendview.editusers')->with('user',$user)->with('groups',$groups)->with('roles',$roles)->render();
+        return response()->json($users);
     }
 
      public function update(Request $request, string $id)
