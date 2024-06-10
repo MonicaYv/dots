@@ -50,14 +50,15 @@ class GroupController extends Controller
 
         $input = $request->all();
         $role = Group::create($input);
-        return redirect()->route('groups');  
+        return redirect()->route('useradmin');  
     }
 
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-       $group = Group::find($id);
-       $permissions = Permissions::get();
-       return view('groups.edit',compact('group','permissions'));
+        $id = $request->id;
+        $group = Group::find($id);
+        $groups = view('appendview.editgroup')->with('group',$group)->render();
+        return response()->json($groups);
     }
 
      public function update(Request $request, string $id)
@@ -69,10 +70,10 @@ class GroupController extends Controller
         $role = Group::find($id);
 
         if ($updated) {
-            return redirect()->route('groups');
+            return redirect()->route('useradmin');
         } else {
             // Handle update failure (e.g., log the error or return a specific error message)
-            return redirect()->route('groups');
+            return redirect()->route('useradmin');
         }
     }
 

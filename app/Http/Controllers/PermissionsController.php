@@ -37,6 +37,13 @@ class PermissionsController extends Controller
         return view('permissions.permissions',compact('permissions'));
     }
 
+     public function permissionsList()
+    {
+        $permissions = Permissions::get();
+        $permission = view('appendview.permissionlist')->with('permissions',$permissions)->render();
+        return response()->json($permission);
+    }
+
     public function add()
     {
        return view('permissions.add');
@@ -57,14 +64,16 @@ class PermissionsController extends Controller
         $input = $request->all();
         $input['permissions'] = implode(',', $input['permissions']);
         $role = Permissions::create($input);
-        return redirect()->route('permissions');  
+        return redirect()->route('permissionsadmin');  
     }
 
-     public function edit(string $id)
+     public function edit(Request $request)
     {
-       $permission = Permissions::find($id);
-       $permission->permissions = explode(",", $permission->permissions);
-       return view('Permissions.edit',compact('permission'));
+        $id = $request->id;
+        $permission = Permissions::find($id);
+        $permission->permissions = explode(',',$permission->permissions);
+        $permissions = view('appendview.editpermission')->with('permission',$permission)->render();
+        return response()->json($permissions);
     }
 
      public function update(Request $request, string $id)
@@ -77,10 +86,10 @@ class PermissionsController extends Controller
         $role = Permissions::find($id);
 
         if ($updated) {
-            return redirect()->route('permissions');
+            return redirect()->route('permissionsadmin');
         } else {
             // Handle update failure (e.g., log the error or return a specific error message)
-            return redirect()->route('permissions');
+            return redirect()->route('permissionsadmin');
         }
     }
 
@@ -88,7 +97,7 @@ class PermissionsController extends Controller
     {
         
         Permissions::where('id', $id)->delete();
-        return redirect()->route('permissions');
+        return redirect()->route('permissionsadmin');
     
     }
 }
