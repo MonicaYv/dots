@@ -62,7 +62,7 @@ body {
 
 :root {
   /*images */
-  --desktop-background: url("http://localhost/desktop2.sizaf.com//public/images/Wallpaper.png");
+  --desktop-background: url("/public/images/Wallpaper.png");
 
   /* fonts */
   --font-roboto: Roboto;
@@ -115,7 +115,7 @@ body {
 /* Dashboard */
 
 .dashboard {
-  background-image: url("http://localhost/desktop2.sizaf.com//public/images/Wallpaper.png");
+  background-image: url("/public/images/Wallpaper.png");
   background-size: 100% 100%;
   position: relative;
 }
