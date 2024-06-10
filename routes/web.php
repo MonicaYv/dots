@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LightAppController;
 use App\Http\Controllers\FileManagerController;
-
+use App\Http\Controllers\SearchController;
 
 
 
@@ -35,6 +35,9 @@ Auth::routes();
 	Route::post('add-apps-desktop/{id}', [LightAppController::class, 'apps']);
 
 //end
+//search
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
+    //
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');

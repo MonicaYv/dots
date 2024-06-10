@@ -69,7 +69,14 @@ function updateClock() {
             
         }
         
-    
+    //Search Contiainer Functionality
+      document
+        .getElementById("search-icon")
+        .addEventListener("click", function () {
+          const searchDiv = document.getElementById("search");
+          searchDiv.classList.toggle("hidden");
+        });
+
         
         function createFolderInsideAnother(parentFolder){
             $.ajax({
