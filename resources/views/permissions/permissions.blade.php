@@ -1,59 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users and Groups</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Include Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-</head>
-
-<style>
-    .dropdown-options {
-            display: none;
-        }
-
-    .dropdown-options-custom-width{
-        max-width: 250px;
-        width: 220px;
-    }
-     
-    /* Style for Input range scroll */
-    input[type=range] {
-            -webkit-appearance: none;
-            width: 40%;
-            background: transparent;
-        }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 10%;
-            height: 8px;
-            cursor: pointer;
-            animate: 0.2s;
-            box-shadow: 1px 1px 1px #8c8989;
-            background: linear-gradient(to right, #fbbf24 20%, #d1d5db 20%); /* 20% yellow, 80% gray */
-            border-radius: 5px;
-            
-        }
-        input[type=range]::-webkit-slider-thumb {   
-            display: none;
-        }
-       /* Custom styles for active dropdown items */
-        .dropdown-item-active {
-            background-color: #fbbf24; /* Yellow */
-            outline-offset: -2px;
-            border-radius: 8px;
-        }
-       /* Custom style for active dropdown button */
-       .dropdown-button-active {
-            outline: 2px solid #fbbf24; /* Yellow */
-            outline-offset: -2px;
-        }
-
-</style>
-
-<body>
+@extends('layouts.setting')
+@section('title', 'Document-Permissions')
+@section('content')
     <main class="bg-gray-100 pt-5">
         <div class="flex items-center mb-4 ml-4 p-3">
             <!-- Setting icon -->
@@ -67,7 +14,7 @@
     <div class="flex items-center justify-between bg-yellow-400 p-2 pl-8  mb-4">
 
         <div>
-            <h2 class="text">Admin & Users > <span class="font-semibold">Users and Groups</span></h2>
+            <h2 class="text">Admin & Users > <span class="font-semibold">Document Permissions</span></h2>
         </div>
         <div class="flex items-center">
             <!-- Search icon -->
@@ -79,8 +26,8 @@
                     <i class="fas fa-search"></i>
                 </span>
             </div>
-            <span class="ml-4 text-2xl mr-3">
-                <i class="fas fa-plus-circle"></i>
+           <span class="ml-4 text-2xl mr-3">
+              <a href="#" data-modal-target="permission-modal" data-modal-toggle="permission-modal"><i class="ri-add-circle-fill"></i></a>
             </span>
             <span class="ml-2 text-2xl">
                 <i class="fas fa-folder"></i>
@@ -88,75 +35,6 @@
         </div>
     </div>
     
-        <div class="users-admin-btn-grp pl-8 flex items-center relative justify-between">
-            
-            <div class="flex items-center">
-            <!-- Dropdown 1 -->
-            
-            <div class="relative">
-                <button onclick="toggleDropdown('dropdownOptions-1')" class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-4 py-1 mr-2">
-                        <span class="">Group 1</span>
-                        <span class="pb-1 pl-2">
-                            <i class="fas fa-sort-down"></i>
-                        </span>
-                </button>
-                <div id="dropdownOptions-1" class="dropdown-options absolute top-0 left-0 mt-10 bg-white border border-gray-300 rounded shadow-md dropdown-options-custom-width">
-                    <div class="p-2 dropdown-options-custom-width">
-                        <a href="#" class="block py-1">Edit</a>
-                        <a href="#" class="block py-1">Set space size batches</a>
-                        <a href="#" class="block py-1"></a>Add sub-group</a>
-                        <a href="#" class="block py-1"></a>New user</a>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Dropdown 2 -->
-            <div class="relative">
-                <button onclick="toggleDropdown('dropdownOptions-2')" class="flex items-center dropdown-toggle focus:border-yellow-500 border border-gray-300 rounded px-4 py-1 mr-2">
-                        <span class="">New User</span>
-                        <span class="pb-1 pl-2">
-                            <i class="fas fa-sort-down"></i>
-                        </span>
-                </button>
-                <div id="dropdownOptions-2" class="dropdown-options absolute top-0 left-0 mt-10 bg-white border border-gray-300 rounded shadow-md">
-                    <div class="p-1 px-5">
-                        <a href="#" class="block">Add in bulk</a>
-                    </div>
-                </div>
-            </div>
-    
-            <!-- Dropdown 3 -->
-            <div class="relative">
-                <button  onclick="toggleDropdown('dropdownOptions-3')" class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-4 py-1 mr-2">
-                        <span class="">Bulk Operations</span>
-                        <span class="pb-1 pl-2">
-                            <i class="fas fa-sort-down"></i>
-                        </span>
-                </button>
-                <div id="dropdownOptions-3" class="dropdown-options absolute top-0 left-0 mt-10 bg-white border border-gray-300 rounded shadow-md dropdown-options-custom-width">
-                 <div class="p-2">
-                        <a href="#" id="userRoleSetting" class="block py-1 px-2 dropdown-item" onclick="setActive('userRoleSetting')">User role setting</a>
-                        <a href="#" id="spaceSizeSetting" class="block py-1 px-2 dropdown-item" onclick="setActive('spaceSizeSetting')">Space size setting</a>
-                        <a href="#" id="removeFromGroup" class="block py-1 px-2 dropdown-item" onclick="setActive('removeFromGroup')">Remove from group</a>
-                        <a href="#" id="addToGroup" class="block py-1 px-2 dropdown-item" onclick="setActive('addToGroup')">Add to group</a>
-                        <a href="#" id="migrateToDepartment" class="block py-1 px-2 dropdown-item" onclick="setActive('migrateToDepartment')">Migrate to department</a>
-                   </div>
-                </div>
-            </div>
-    
-            <!-- Disabled Button 1 -->
-            <button class="disabled-btn bg-gray-300 text-gray-600 px-4 py-2 rounded mr-2" disabled>Button 1</button>
-    
-            <!-- Disabled Button 2 -->
-            <button class="disabled-btn bg-gray-300 text-gray-600 px-4 py-2 rounded mr-2" disabled>Button 2</button>
-            
-            <!-- Disabled Button 3 -->
-            <button class="disabled-btn bg-gray-300 text-gray-600 px-4 py-2 rounded" disabled>Button 3</button>
-        </div>
-            <div>
-                <p class="text-sm mr-6">ID: 1 Dep: 1</p>
-            </div>
-        </div>
     
         <div class="users-admin-content-wrapper pl-8  pr-3">
             <div class="container mx-auto mt-10">
@@ -183,20 +61,167 @@
                                 </div>
                             </th> -->
                             <th class="px-6 py-3 border-b border-gray-300  text-left text-xs leading-4 font-medium text-gray-100 border-none tracking-wider">Permissions</th>
+                            <th class="px-6 py-3 border-b border-gray-300  text-left text-xs leading-4 font-medium text-gray-100 border-none tracking-wider">Actions</th>
                         </tr>
                         </thead>
                         <tbody id="searchableTableBody">
                             <!-- Table rows will be dynamically added here -->
+                            
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        
 
 </main>
 
+<!-- Main modal -->
+<div id="permission-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Add Document Permission
+                </h3>
+                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="permission-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-4 md:p-5 space-y-4">
+                <form class="max-w-sm mx-auto" action="{{ route('permission-create') }}" method="POST">
+                    @csrf
+                      <div class="mb-5">
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                        <input type="text" name="name" id="email" class="p-3 shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Permission name" required />
+                      </div>
+
+
+        <div class="mb-5">        
+        <!-- File Management Section -->
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Permissions</label>
+          <ul class="bg-gray-200 p-4 rounded-lg flex flex-wrap gap-4">
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="file-manage" class="text-gray-600 flex items-center">
+                <span>Document List: File List: View</span>
+                <input type="checkbox" id="file-manage" name="permissions[]" value="file-manage" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="preview" class="text-gray-600 flex items-center">
+                <span>Preview</span>
+                <input type="checkbox" id="preview" name="permissions[]"  value="preview" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="search" class="text-gray-600 flex items-center">
+                <span>Search</span>
+                <input type="checkbox" id="search" name="permissions[]"  value="search" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="download" class="text-gray-600 flex items-center">
+                <span>Download</span>
+                <input type="checkbox" id="download" name="permissions[]" value="download" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="new-file" class="text-gray-600 flex items-center">
+                <span>New file (folder)</span>
+                <input type="checkbox" id="new-file"  name="permissions[]" value="new-file" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="upload" class="text-gray-600 flex items-center">
+                <span>Upload</span>
+                <input type="checkbox" id="upload" name="permissions[]" value="upload" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="share" class="text-gray-600 flex items-center">
+                <span>Share</span>
+                <input type="checkbox" id="share" name="permissions[]" value="share" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="edit" class="text-gray-600 flex items-center">
+                <span>Edit</span>
+                <input type="checkbox" id="edit" name="permissions[]" value="edit" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="delete" class="text-gray-600 flex items-center">
+                <span>Delete</span>
+                <input type="checkbox" id="delete" name="permissions[]" value="delete" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="edit" class="text-gray-600 flex items-center">
+                <span>Comments:View document comments; add/delete your own comments (editing permission required):</span>
+                <input type="checkbox" id="comments" name="permissions[]" value="comments" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+            <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="edit" class="text-gray-600 flex items-center">
+                <span>Dynamics:Document dynamic viewing, subscription dynamic:</span>
+                <input type="checkbox" id="dynamic" name="permissions[]" value="dynamic" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+             <li class="inline-flex items-center p-2 bg-gray-300 rounded-md">
+              <label for="edit" class="text-gray-600 flex items-center">
+                <span>Administration:Set member permissions / comment / history version management:</span>
+                <input type="checkbox" id="admin" name="permissions[]" value="admin" class="rounded-full text-blue-500 focus:ring-blue-500 focus:ring-2 ml-2">
+              </label>
+            </li>
+          </ul>
+        </div>
+
+
+  
+                      
+                    
+                      
+                      <button type="submit" class="p-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save</button>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Edit modal -->
+        <div id="permission-edit-div">
+            
+        </div>
+<!-- End Edit modal -->
+
+
+@endsection
+
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script src="{{ asset($constants['JSFILEPATH'].'setting.js') }}"></script>
 <script>
+
+ $(document).ready(function(){     
+ // Initial population of the table
+    populateTable();
+    
+
+    // $('table td a.editUserpermission').on('click',function(e){
+
+    //     e.preventDefault();
+    //     alert('working');
+
+    // });
     function toggleDropdown(id) {
         var dropdownOptions = document.getElementById(id);
         var allDropdowns = document.querySelectorAll('.dropdown-options');
@@ -237,45 +262,39 @@
         var clickedItem = document.getElementById(elementId);
         clickedItem.classList.add('dropdown-item-active');
     }
-     // Data for the table (example)
-     // const tableData = [
-     //            { nickname: "Vicky", role: "Administrator", spaceUsage: "1.1MB/Unlimited", group: "Group" },
-     //            { nickname: "Administrator", role: "Administrator", spaceUsage: "1.1KB/2GB", group: "Group" },
-     //            { nickname: "Vighnesh", role: "User", spaceUsage: "1.1KB/4GB", group: "Developer" }
-     //        ];
-        const tableData = @php echo $permissions @endphp;  
         
             // Function to populate the table with data
             function populateTable(data) {
-                const tableBody = document.getElementById('searchableTableBody');
-                tableBody.innerHTML = ''; // Clear previous data
-        
-                data.forEach(row => {
-                    const newRow = document.createElement('tr');
-                    newRow.innerHTML = `
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-300">${row.name}</td>
-                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-300">${row.permissions}</td>
-                    `;
-                    tableBody.appendChild(newRow);
-                });
+                const searchTerm = '';
+                const listroute = @json(route('permission-list'));
+                $.ajax({
+                            url: listroute,
+                            method: 'GET',
+                            data: { searchTerm:searchTerm },
+                            success: function (response) {
+                                // Update the app list container with the updated list
+                                $('#searchableTableBody').html(response);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(xhr.responseText);
+                            }
+                        });
+
             }
         
-            // Initial population of the table
-            populateTable(tableData);
         
             // Search functionality
             const searchInput = document.getElementById('searchInput');
             searchInput.addEventListener('input', function () {
                 const searchTerm = searchInput.value.toLowerCase();
                 const filteredData = tableData.filter(row =>
-                    row.nickname.toLowerCase().includes(searchTerm) ||
-                    row.role.toLowerCase().includes(searchTerm) ||
-                    row.group.toLowerCase().includes(searchTerm)
+                    row.name.toLowerCase().includes(searchTerm) ||
+                    row.permissions.toLowerCase().includes(searchTerm) 
                 );
                 populateTable(filteredData);
             });
+
+});
         </script>
 
-</body>
-
-</html>
+@endsection
