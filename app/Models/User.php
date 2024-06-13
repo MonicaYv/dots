@@ -64,4 +64,9 @@ class User extends Authenticatable
         return $this->belongsTo(Group::class, 'groupID');
        
     }
+
+    public function loginLogs()
+    {
+        return $this->hasMany(LoginLog::class);
+    }
 }

@@ -2,7 +2,7 @@
 @extends('layouts.common')
 @section('title', 'Dashboard')
 @section('styles')
-    <!--<link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'dashbord.css') }}">-->
+    <!--<link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'app.css') }}">-->
 @endsection
 @section('content')
     <div class="w-full h-screen">
@@ -10,7 +10,7 @@
         <div
           class="navbar flex items-center justify-end gap-8 p-2 md:p-4 lg:p-3"
         >
-          <i class="ri-search-line text-white text-2xl"></i>
+          <i class="ri-search-line text-white text-2xl" id="search-icon"></i>
           <i
             id="notification-icon"
             class="ri-notification-line text-white text-2xl"
@@ -24,6 +24,25 @@
         
         </div>
         <div class="clock" id="clock"></div>
+       <div id="search" class="Search hidden relative overflow-hidden">
+    <i class="fa-solid fa-magnifying-glass search-icon absolute"></i>
+    <input
+        type="search"
+        id="search-input"
+        class="search-input py-3 px-10 outline-none border-b-2"
+        placeholder="Search"
+    />
+    <div
+            class="search-data w-full min-h-12 flex flex-col gap-2 px-6 py-4 hidden"
+         id="searchData"  >
+            
+          </div>
+ 
+
+</div>
+
+
+
         <div id="toast-success" class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 float-right" role="alert">
     <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -71,11 +90,39 @@
     <!--end here -->
     
    
-        
+      
 
 <script>
       const desktopapp = @json(route('desktopapp'));
-      const createFolderRoute = @json(route('createfolder'));
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#search-input').on('keyup', function () {
+            var query = $(this).val();
+            if (query.length > 2) {
+                $.ajax({
+                    url: '{{ route('search') }}',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { query: query },
+                   success: function (data) {
+
+                   $('#searchData').removeClass('hidden');
+                   $('#searchData').html(data.html);
+
+        },
+                    error: function () {
+                        $('#searchData').html('<p>An error occurred while searching.</p>').removeClass('hidden');
+                    }
+                });
+            } else {
+               $('#searchData').addClass('hidden').html('');
+            }
+        });
+    });
+
 
 </script>
 @endsection

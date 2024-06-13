@@ -127,7 +127,7 @@
                 <div class="p-3 mt-3 flex items-center rounded-r-md px-4 duration-300 cursor-pointer hover:bg-gray-900 text-black hover-color-custom-yellow" onclick="setActive(this); dropdown('submenu-safety-control', 'arrow-safety-control')">
                     <div class="flex justify-between w-full items-center">
                         
-                        <a href="./404.html" target="content-frame" class="flex items-center w-full">
+                        <a href="{{ route('logs') }}" target="content-frame" class="flex items-center w-full">
                             <span class="text-[15px] ml-4">Safety Control</span>
                             <span class="text-sm rotate-180 absolute right-4">
                                 <i class="ri-arrow-right-s-line"></i>
