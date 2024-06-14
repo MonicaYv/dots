@@ -5,7 +5,9 @@ use App\Http\Controllers\LightAppController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\LoginLogController;
-
+use App\Http\Controllers\UserController;
+use App\Exports\LoginsExport;
+use Maatwebsite\Excel\Facades\Excel;   
 
 
 
@@ -48,8 +50,12 @@ Auth::routes();
 Route::get('/logs', [App\Http\Controllers\LoginLogController::class, 'index'])->name('logs');
 
 Route::get('login-logs/filter', [LoginLogController::class, 'filter'])->name('loginLogs.filter');
-    //end
 
+Route::get('/users/role/{roleId}', [UserController::class, 'getUsersByRole'])->name('users.byRole');
+    //end
+//EXCELL
+Route::get('/export-logins', [LoginLogController::class, 'export'])->name('export.logins');
+//END
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');

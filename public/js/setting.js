@@ -50,3 +50,19 @@ function toggleDropdown(id) {
                 console.error('Popup with id ' + popupId + ' not found.');
             }
         }
+
+               
+        $(document).ready(function(){
+            $('.filter-button').on('click', function(){
+                var filter = $(this).data('filter');
+                $.ajax({
+                    url: '{{ route("loginLogs.filter") }}', // Route to handle the AJAX request
+                    type: 'GET',
+                    data: { filter: filter },
+                    success: function(response){
+                        $('#log-entries').html(response.html); // Update the table body with the new data
+                    }
+                });
+            });
+        });
+   

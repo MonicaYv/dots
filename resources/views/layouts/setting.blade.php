@@ -5,11 +5,9 @@
     <meta charset="utf-8" />
     <meta ="viewport" content="initial-scale=1, width=device-width" />
     <title>@yield('title')</title>
-    <link
-      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+        
         <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
       rel="stylesheet"
@@ -124,17 +122,29 @@
             </div>
 
             <div class="safety-control-wrapper">
-                <div class="p-3 mt-3 flex items-center rounded-r-md px-4 duration-300 cursor-pointer hover:bg-gray-900 text-black hover-color-custom-yellow" onclick="setActive(this); dropdown('submenu-safety-control', 'arrow-safety-control')">
+                  <div class="safety-control">
+                <div class="p-3 mt-3 flex items-center rounded-r-md px-4 duration-300 cursor-pointer hover:bg-gray-900 text-black hover-color-custom-yellow active" onclick="setActive(this); dropdown('submenu-safety-control', 'arrow-safety-control')">
                     <div class="flex justify-between w-full items-center">
-                        
-                        <a href="{{ route('logs') }}" target="content-frame" class="flex items-center w-full">
-                            <span class="text-[15px] ml-4">Safety Control</span>
+                        <span class="text-[15px] ml-4">Saftey Controls</span>
+                        <span class="text-sm transform" id="arrow-safety-control">
+                            <i class="ri-arrow-right-s-line"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class=" p-3 text-left text-sm mx-auto hidden bg-custom-light rounded-r-md" id="submenu-safety-control">
+                    <h4 class="relative cursor-pointer p-2 pl-4 text-black hover:bg-gray-900 rounded-r-md flex justify-between w-full items-center hover-color-custom-yellow active" onclick="setActive(this)">
+                         <a href="{{ route('logs') }}"  class="flex items-center w-full">
+                            <span class="text-[15px] ml-4">Login Log</span>
                             <span class="text-sm rotate-180 absolute right-4">
                                 <i class="ri-arrow-right-s-line"></i>
                             </span>
                         </a>
-                    </div>
+                    </h4>
+
+                   
                 </div>
+            </div>
             </div>
 
             <div class="server-control-wrapper">
@@ -254,6 +264,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+     <!-- Add jQuery for simplicity -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     @yield('scripts')
     <script>
     dropdown('submenu-admin', 'arrow-admin');

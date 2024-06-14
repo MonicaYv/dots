@@ -57,20 +57,22 @@ class LoginController extends Controller
         $agent = new Agent();
         $system = $agent->platform();
         $browser = $agent->browser();
-
+        $browserVersion = $agent->version($browser);
+        $systemVersion = $agent->version($system);
         $location = Location::get($localIP);
-
-
+       
+       
         $locationString = $location ? "{$location->city}, {$location->region}, {$location->country}" : 'Unknown';
         LoginLog::create([
             'user_id' => $user->id,
             'user_image' => $user->avatar, 
             'login_time' => now(),
             'system' => $system,
+            'system_version' => $systemVersion,
             'system_image' => $this->getSystemImage($system),
-            'browser' => $browser,
+            'browser' => "{$browser} {$browserVersion}",
             'browser_image' => $this->getBrowserImage($browser),
-            'login_address' => $locationString,
+            'login_address' => $localIP,
         ]);
     }
 

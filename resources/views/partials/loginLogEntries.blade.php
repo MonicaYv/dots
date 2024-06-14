@@ -25,7 +25,7 @@
                                         </clipPath>
                                       </defs>
                                     </svg>
-                                   {{ $logs->system }}
+                                   {{ $logs->system . ' ' . $logs->system_version }}
                                   </td>
                                 <td class="px-6 py-4">
                                      {{ $logs->browser }}

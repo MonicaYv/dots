@@ -9,13 +9,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'root.css') }}">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'setting-admin-users.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
      <!-- Add jQuery for simplicity -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
+
 
 </head>
 
-<body>
     <main class="bg-gray-100 pt-5">
         <div class="flex items-center mb-4 ml-4 p-3">
             <!-- Setting icon -->
@@ -48,43 +52,38 @@
                 <button data-filter="30-days"
                     class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-1 mr-2 hover:border-yellow-300 filter-button">Last
                     30 days</button>
-                <button
+                <button id="customize"
                     class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-1 mr-2 hover:border-yellow-300">Customize</button>
-
-
-
-                <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
-                    class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-1 mr-2 hover:border-yellow-300  px-6 py-1 text-center"
-                    type="button">Select User <svg class="w-2.5 h-2.5 ms-3 ml-2" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
-                    </svg>
+                <button class="date-select flex items-center gap-2 focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded mr-2 hover:border-yellow-300 hidden">             
+                        <input class="outline-none bg-gray-100 w-24 py-1 pl-2" datepicker datepicker-autohide type="text" placeholder="Select date start" readonly>
+                        <input type="time" id="time" class="outline-none bg-gray-100" min="09:00" max="18:00" value="00:00" required/>
                 </button>
+                
+                     <button
+                    class=" date-select flex items-center gap-2 focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded mr-2 hover:border-yellow-300 hidden">
+                     <input class="outline-none bg-gray-100 w-24 py-1 pl-2 " datepicker datepicker-autohide type="text" placeholder="Select date end" readonly>
+                      <input type="time" id="time" class="outline-none bg-gray-100" min="09:00" max="18:00" value="00:00" required/>     
+                    </button>
+            
 
-                <!-- Dropdown menu -->
-                <div id="dropdownHover"
-                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign
-                                out</a>
-                        </li>
-                    </ul>
-                </div>
+
+
+                    
+
+  <a href="{{ route('export.logins') }}" class="btn btn-success" target="_blank">Export to Excel</a>
+              
+
+    <!-- Dropdown menu -->
+             <select class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-2 mr-2 hover:border-yellow-300  form-control roles_filter" id="sel1" name="roleID" id="roleID">
+            <option value="">Please Select</option>
+             @foreach($roles as $role)
+              <option data-role-ID = "{{ $role->id }}" value="{{ $role->id }}">{{ $role->name }}</option>
+             @endforeach
+          </select>
+            <!-- User List -->
+        <div id="userList" class="mt-5">
+            <!-- Users will be displayed here -->
+        </div>
 
             </div>
 
@@ -116,7 +115,7 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody id="log-entries">
+                        <tbody id="log-entries" id="userList">
                                 @foreach($log as $logs)
              
              
@@ -131,8 +130,7 @@
                                 <td class="px-6 py-4">
                                    {{ $logs->login_time }}
                                 </td>
-                                
-                            
+                                                           
                                 <td class="px-6 py-4 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 18 18" fill="none">
                                       <g clip-path="url(#clip0_527_173)">
@@ -144,14 +142,15 @@
                                         </clipPath>
                                       </defs>
                                     </svg>
-                                   {{ $logs->system }}
+                                {{ $logs->system . ' ' . $logs->system_version }}
                                   </td>
                                 <td class="px-6 py-4">
                                      {{ $logs->browser }}
 
                                 </td>
                                 <td class="px-6 py-4">
-                                    India
+                                    {{ $logs->localIP }} India
+
                                 </td>
                             </tr>
                             @endforeach
@@ -165,6 +164,7 @@
         $(document).ready(function(){
             $('.filter-button').on('click', function(){
                 var filter = $(this).data('filter');
+            
                 $.ajax({
                     url: '{{ route("loginLogs.filter") }}', // Route to handle the AJAX request
                     type: 'GET',
@@ -174,16 +174,38 @@
                     }
                 });
             });
+
+
+            $('.roles_filter').on('change', function(){
+               
+                var roles = $(this).val();
+               
+                $.ajax({
+                    url: '{{ route("loginLogs.filter") }}', // Route to handle the AJAX request
+                    type: 'GET',
+                    data: { roles: roles,filter:'role' },
+                    success: function(response){
+                        $('#log-entries').html(response.html); // Update the table body with the new data
+                    }
+                });
+            });
         });
     </script>
+    
+<script type="text/javascript">
+    document.getElementById("customize").addEventListener("click",function(){
+          document.querySelectorAll(".date-select").forEach(function(element) {
+            element.classList.toggle('hidden');
+        });
+        })
+</script>
                 </div>
 
             </div>
         </div>
-
+  
 
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-</body>
-
-</html>
+      
+   
