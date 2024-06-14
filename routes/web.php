@@ -88,3 +88,13 @@ Route::get('/group-delete/{id}', [App\Http\Controllers\GroupController::class, '
 /// Filemanager
 Route::get('/filemanager', [FileManagerController::class, 'index'])->name('filemanager');
 Route::get('/createfolder', [FileManagerController::class, 'createFolder'])->name('createfolder');
+
+//CloudStorage
+Route::get('/cloudStoreS3', [CloudStorageController::class, 'index'])->name('cloudstore-s3-list');
+Route::get('/cloudStoreS3CreateFolder/{foldername}', [CloudStorageController::class, 'createFolder'])->name('cloudstore-s3-create-folder');
+Route::get('/cloudStoreS3CreateSubFolder/{parent}/{foldername}', [CloudStorageController::class, 'createSubFolder'])->name('cloudstore-s3-create-folder');
+Route::get('/cloudStoreS3list', [CloudStorageController::class, 'list'])->name('cloudstore-s3-rawlist');
+Route::get('/getFileFromS3/{file}', [CloudStorageController::class, 'getFileContent'])->name('cloudstore-s3-getfile');
+Route::get('/deleteFileFromS3', [CloudStorageController::class, 'delete'])->name('cloudstore-s3-delete');
+Route::post('/cloudStoreS3CreateFile', [CloudStorageController::class, 'createFile'])->name('cloudstore-s3-create-file');
+
