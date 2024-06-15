@@ -32,7 +32,7 @@
 
         <div class="flex items-center justify-between bg-yellow-400 p-2 pl-8  mb-4">
             <div>
-                <h2 class="text">Safety Control > <span class="font-semibold">Login Log</span></h2>
+                <h2 class="text">Safety Control> <span class="font-semibold">Operation Log</span></h2>
             </div>
         </div>
 
@@ -70,7 +70,7 @@
 
                     
 
-  <a href="{{ route('export.logins') }}" class="btn btn-success" target="_blank">Export to Excel</a>
+  <a href="{{ route('export.operations') }}" class="btn btn-success" target="_blank">Export to Excel</a>
               
 
     <!-- Dropdown menu -->
@@ -105,16 +105,17 @@
                                
                                 
                                 <th scope="col" class="px-6 py-3">
-                                   System
+                                   Action
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Client
+                                   Details
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Login address
                                 </th>
                             </tr>
                         </thead>
+
                         <tbody id="log-entries" id="userList">
                                 @foreach($log as $logs)
              
@@ -128,13 +129,13 @@
                                     <span class="bg-gray-400 rounded-full px-2"></span> {{ $logs->user->name }}
                                 </th>
                                 <td class="px-6 py-4">
-                                   {{ $logs->login_time }}
+                                   {{ $logs->created_at }}
                                 </td>
                                                            
                                 <td class="px-6 py-4 flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 18 18" fill="none">
                                       <g clip-path="url(#clip0_527_173)">
-                                        <path d="M17.7188 0.22998L8.29691 1.61289V8.62037L17.7188 8.54528V0.22998ZM0.231644 9.38073L0.232065 15.3438L7.37455 16.3258L7.36893 9.42714L0.231644 9.38073ZM8.22196 9.47636L8.23518 16.4324L17.7099 17.7696L17.7122 9.49196L8.22196 9.47636ZM0.22644 2.71342L0.23305 8.67353L7.37553 8.63289L7.3723 1.74001L0.22644 2.71342Z" fill="#00ADEF"/>
+                                        <path />
                                       </g>
                                       <defs>
                                         <clipPath id="clip0_527_173">
@@ -142,15 +143,15 @@
                                         </clipPath>
                                       </defs>
                                     </svg>
-                                {{ $logs->system . ' ' . $logs->system_version }}
+                               {{ $logs->new_values }}
                                   </td>
                                 <td class="px-6 py-4">
-                                     {{ $logs->browser }}
+                                     {{ $logs->event }}
 
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $logs->localIP }} India
-
+                                     
+                                    India
                                 </td>
                             </tr>
                             @endforeach
@@ -166,7 +167,7 @@
                 var filter = $(this).data('filter');
             
                 $.ajax({
-                    url: '{{ route("loginLogs.filter") }}', // Route to handle the AJAX request
+                    url: '{{ route("operationLogs.filter") }}', // Route to handle the AJAX request
                     type: 'GET',
                     data: { filter: filter },
                     success: function(response){
@@ -181,7 +182,7 @@
                 var roles = $(this).val();
                
                 $.ajax({
-                    url: '{{ route("loginLogs.filter") }}', // Route to handle the AJAX request
+                    url: '{{ route("operationLogs.filter") }}', // Route to handle the AJAX request
                     type: 'GET',
                     data: { roles: roles,filter:'role' },
                     success: function(response){

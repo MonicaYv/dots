@@ -6,6 +6,7 @@ use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\LoginLogController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OperationLogController;
 use App\Exports\LoginsExport;
 use Maatwebsite\Excel\Facades\Excel;   
 
@@ -52,9 +53,19 @@ Route::get('/logs', [App\Http\Controllers\LoginLogController::class, 'index'])->
 Route::get('login-logs/filter', [LoginLogController::class, 'filter'])->name('loginLogs.filter');
 
 Route::get('/users/role/{roleId}', [UserController::class, 'getUsersByRole'])->name('users.byRole');
+
+//operation
+Route::get('/operation_logs', [App\Http\Controllers\OperationLogController::class, 'index'])->name('operation_logs');
+
+Route::get('operation-logs/filter', [OperationLogController::class, 'filter'])->name('operationLogs.filter');
+
+Route::get('/users/role/{roleId}', [UserController::class, 'getUsersByRole'])->name('users.byRole');
     //end
+
+
 //EXCELL
 Route::get('/export-logins', [LoginLogController::class, 'export'])->name('export.logins');
+Route::get('/export-operation', [OperationLogController::class, 'export'])->name('export.operations');
 //END
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
