@@ -53,17 +53,22 @@
                     class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-1 mr-2 hover:border-yellow-300 filter-button">Last
                     30 days</button>
                 <button id="customize"
-                    class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-1 mr-2 hover:border-yellow-300">Customize</button>
-                <button class="date-select flex items-center gap-2 focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded mr-2 hover:border-yellow-300 hidden">             
-                        <input class="outline-none bg-gray-100 w-24 py-1 pl-2" datepicker datepicker-autohide type="text" placeholder="Select date start" readonly>
-                        <input type="time" id="time" class="outline-none bg-gray-100" min="09:00" max="18:00" value="00:00" required/>
-                </button>
-                
-                     <button
-                    class=" date-select flex items-center gap-2 focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded mr-2 hover:border-yellow-300 hidden">
-                     <input class="outline-none bg-gray-100 w-24 py-1 pl-2 " datepicker datepicker-autohide type="text" placeholder="Select date end" readonly>
-                      <input type="time" id="time" class="outline-none bg-gray-100" min="09:00" max="18:00" value="00:00" required/>     
-                    </button>
+        class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-1 mr-2 hover:border-yellow-300">
+    Customize
+</button>
+<button id="filter"
+        class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-1 mr-2 hover:border-yellow-300">
+    Filter
+</button>
+<div class="date-select flex items-center gap-2 focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded mr-2 hover:border-yellow-300">
+    <input id="start-date" class="outline-none bg-gray-100 w-24 py-1 pl-2" datepicker datepicker-autohide type="text" placeholder="Select date start" readonly>
+    <input id="start-time" type="time" class="outline-none bg-gray-100" min="09:00" max="18:00" value="00:00" required/>
+</div>
+
+<div class="date-select flex items-center gap-2 focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded mr-2 hover:border-yellow-300">
+    <input id="end-date" class="outline-none bg-gray-100 w-24 py-1 pl-2" datepicker datepicker-autohide type="text" placeholder="Select date end" readonly>
+    <input id="end-time" type="time" class="outline-none bg-gray-100" min="09:00" max="18:00" value="00:00" required/>
+</div>
             
 
 
@@ -191,6 +196,59 @@
                 });
             });
         });
+    </script>
+
+       <script>
+       $(document).ready(function() {
+    $('#filter').click(function() {
+        // Get the input values
+        var startDate = $('#start-date').val();
+        var startTime = $('#start-time').val();
+        var endDate = $('#end-date').val();
+        var endTime = $('#end-time').val();
+
+        // Combine and format date and time
+        var startDateTime = startDate + ' ' + startTime;
+        var endDateTime = endDate + ' ' + endTime;
+
+        // Format date-time to Y-m-d H:i
+        var startDateTimeFormatted = formatDateTime(startDateTime);
+        var endDateTimeFormatted = formatDateTime(endDateTime);
+
+        // Make AJAX request
+        $.ajax({
+            url: '{{ route("operationLogs.filter") }}', // URL to send the request to
+            type: 'GET',
+            data: {
+                start_date_time: startDateTimeFormatted,
+                end_date_time: endDateTimeFormatted,
+                filter: 'dateTime'
+            },
+            success: function(response) {
+                // Handle success
+                
+                $('#log-entries').html(response.html); 
+              
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                console.error(error);
+            }
+        });
+    });
+
+    function formatDateTime(dateTime) {
+        var date = new Date(dateTime);
+        var year = date.getFullYear();
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var day = ('0' + date.getDate()).slice(-2);
+        var hours = ('0' + date.getHours()).slice(-2);
+        var minutes = ('0' + date.getMinutes()).slice(-2);
+        return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+});
+
+
     </script>
     
 <script type="text/javascript">

@@ -10,11 +10,13 @@ class LoginsExport implements FromCollection, WithHeadings
 {
     public function collection()
     {
-
-    	 // Add some logging to check if this method is being called
+        // Add some logging to check if this method is being called
         \Log::info('LoginsExport collection method called');
         
-        return LoginLog::select('user_id', 'login_time', 'system', 'system_version', 'browser','login_address')->get();
+        return LoginLog::with('user')
+            ->join('users', 'login_logs.user_id', '=', 'users.id')
+            ->select('users.name as user_name', 'login_logs.login_time', 'login_logs.system', 'login_logs.system_version', 'login_logs.browser', 'login_logs.login_address')
+            ->get();
     }
 
     public function headings(): array

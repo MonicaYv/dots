@@ -50,6 +50,16 @@ class OperationLogController extends Controller
                 }
                 
                 break;
+                 case 'dateTime':
+   
+    $query->whereBetween('created_at', [
+    date('Y-m-d H:i:s', strtotime($request->start_date_time)),
+    date('Y-m-d H:i:s', strtotime($request->end_date_time))
+]);
+
+    
+
+     break;
 
             default:
                 break;

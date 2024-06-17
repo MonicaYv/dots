@@ -53,13 +53,14 @@ Route::get('/logs', [App\Http\Controllers\LoginLogController::class, 'index'])->
 Route::get('login-logs/filter', [LoginLogController::class, 'filter'])->name('loginLogs.filter');
 
 Route::get('/users/role/{roleId}', [UserController::class, 'getUsersByRole'])->name('users.byRole');
-
+Route::get('/filter-records', [LoginLogController::class, 'filterRecords'])->name('filter.records');;
 //operation
 Route::get('/operation_logs', [App\Http\Controllers\OperationLogController::class, 'index'])->name('operation_logs');
 
 Route::get('operation-logs/filter', [OperationLogController::class, 'filter'])->name('operationLogs.filter');
 
 Route::get('/users/role/{roleId}', [UserController::class, 'getUsersByRole'])->name('users.byRole');
+Route::get('/filter-record', [OperationLogController::class, 'filterRecords'])->name('filter.record');;
     //end
 
 
