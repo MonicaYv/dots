@@ -71,9 +71,9 @@
 </div>       
                     
 
-  <a href="{{ route('export.logins') }}" class="btn btn-success" target="_blank">Export to Excel</a>
+  <!-- <a href="{{ route('export.logins') }}" class="btn btn-success" target="_blank">Export to Excel</a> -->
               
-
+  <a class="btn btn-success" id="export-button">Export to Excel</a>
     <!-- Dropdown menu -->
              <select class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-2 mr-2 hover:border-yellow-300  form-control roles_filter" id="sel1" name="roleID" id="roleID">
             <option value="">Please Select</option>
@@ -94,7 +94,7 @@
             <div class="container mx-auto mt-10">
                 <!-- Searchable Table -->
                 <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" id="my-table">
                         <thead class="text-xs text-white uppercase bg-gray-500 dark:text-white">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
@@ -160,8 +160,74 @@
                     </table>
                       <!-- Pagination Links -->
                        {{ $log->links() }}
+                               <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+        <!-- Export Functionality -->
+        <script>
+            document.getElementById('export-button').addEventListener('click', function() {
+                // Select the HTML table element
+                var table = document.getElementById('my-table'); // Replace with your table ID
 
-                <script>
+                // Ensure the table is updated before export
+                if (!table) {
+                    console.error('Table element not found!');
+                    return;
+                }
+
+                // Log the table to ensure it's found
+                // console.log(table);
+
+                // Convert the HTML table to a SheetJS workbook
+                var workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+
+                // Generate a binary string representation of the workbook
+                var binaryString = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+
+                // Convert the binary string to an array buffer
+                var buffer = new ArrayBuffer(binaryString.length);
+                var view = new Uint8Array(buffer);
+                for (var i = 0; i < binaryString.length; i++) {
+                    view[i] = binaryString.charCodeAt(i) & 0xFF;
+                }
+
+                // Create a Blob from the array buffer
+                var blob = new Blob([buffer], { type: 'application/octet-stream' });
+
+                // Create a link element
+                var link = document.createElement('a');
+
+                // Set the download attribute with a filename
+                link.href = URL.createObjectURL(blob);
+                link.download = 'LogIn-Log.xlsx';
+
+                // Append the link to the body
+                document.body.appendChild(link);
+
+                // Programmatically click the link to trigger the download
+                link.click();
+
+                // Remove the link from the document
+                document.body.removeChild(link);
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                
+                
+                // Get the current time
+                const now = new Date();
+                let hours = now.getHours();
+                let minutes = now.getMinutes();
+                
+                // Pad the hours and minutes with leading zeros if needed
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                
+                // Set the current time in the time input field
+                const currentTime = hours + ':' + minutes;
+                document.getElementById('end-time').value = currentTime;
+            });
+        
         $(document).ready(function(){
             $('.filter-button').on('click', function(){
                 var filter = $(this).data('filter');

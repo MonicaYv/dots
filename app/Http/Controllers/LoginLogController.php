@@ -27,6 +27,7 @@ class LoginLogController extends Controller
 
 public function filter(Request $request)
 {
+    // dd($request->all());
     $filter = $request->input('filter');
     $query = LoginLog::with('user');
     $roleId= @$request->roles?$request->roles:0;

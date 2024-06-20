@@ -73,7 +73,8 @@
             
 
 
-  <a href="{{ route('export.operations') }}" class="btn btn-success" target="_blank">Export to Excel</a>
+  <!-- <a href="{{ route('export.operations') }}" class="btn btn-success" target="_blank">Export to Excel</a> -->
+  <a class="btn btn-success" id="export-button">Export to Excel</a>
               
 <div class="dropdown inline-block relative">
   <button class="flex items-center border rounded px-6 py-1 custom-outline data1" id="custom">
@@ -152,7 +153,7 @@
             <div class="container mx-auto mt-10">
                 <!-- Searchable Table -->
                 <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400" id="my-table">
                         <thead class="text-xs text-white uppercase bg-gray-500 dark:text-white">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
@@ -218,6 +219,58 @@
                     </table>
                       <!-- Pagination Links -->
                        {{ $log->links() }}
+
+        <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+        <!-- Export Functionality -->
+        <script>
+            document.getElementById('export-button').addEventListener('click', function() {
+                // Select the HTML table element
+                var table = document.getElementById('my-table'); // Replace with your table ID
+
+                // Ensure the table is updated before export
+                if (!table) {
+                    console.error('Table element not found!');
+                    return;
+                }
+
+                // Log the table to ensure it's found
+                // console.log(table);
+
+                // Convert the HTML table to a SheetJS workbook
+                var workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+
+                // Generate a binary string representation of the workbook
+                var binaryString = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+
+                // Convert the binary string to an array buffer
+                var buffer = new ArrayBuffer(binaryString.length);
+                var view = new Uint8Array(buffer);
+                for (var i = 0; i < binaryString.length; i++) {
+                    view[i] = binaryString.charCodeAt(i) & 0xFF;
+                }
+
+                // Create a Blob from the array buffer
+                var blob = new Blob([buffer], { type: 'application/octet-stream' });
+
+                // Create a link element
+                var link = document.createElement('a');
+
+                // Set the download attribute with a filename
+                link.href = URL.createObjectURL(blob);
+                link.download = 'table-data.xlsx';
+
+                // Append the link to the body
+                document.body.appendChild(link);
+
+                // Programmatically click the link to trigger the download
+                link.click();
+
+                // Remove the link from the document
+                document.body.removeChild(link);
+            });
+        </script>
+
+
 
                 <script>
         $(document).ready(function(){
