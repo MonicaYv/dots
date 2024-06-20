@@ -4,16 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use OwenIt\Auditing\Auditable as AuditableTrait;
 
 
 
-class LoginLog extends Model implements Auditable
+class LoginLog extends Model 
 {
     use HasFactory;
 
-     use AuditableTrait;
+     
      
     protected $fillable = [
         'user_id',

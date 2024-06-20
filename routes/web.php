@@ -10,7 +10,7 @@ use App\Http\Controllers\OperationLogController;
 use App\Exports\LoginsExport;
 use Maatwebsite\Excel\Facades\Excel;   
 
-
+use App\Http\Controllers\ActivityController;
 
 
 Route::get('/', function () {
@@ -55,6 +55,7 @@ Route::get('login-logs/filter', [LoginLogController::class, 'filter'])->name('lo
 Route::get('/users/role/{roleId}', [UserController::class, 'getUsersByRole'])->name('users.byRole');
 Route::get('/filter-records', [LoginLogController::class, 'filterRecords'])->name('filter.records');;
 //operation
+Route::get('/activities', [ActivityController::class, 'index'])->middleware('auth');
 Route::get('/operation_logs', [App\Http\Controllers\OperationLogController::class, 'index'])->name('operation_logs');
 
 Route::get('operation-logs/filter', [OperationLogController::class, 'filter'])->name('operationLogs.filter');

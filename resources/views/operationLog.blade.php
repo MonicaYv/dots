@@ -8,12 +8,13 @@
     <!-- Include Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'root.css') }}">
+    <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'app.css') }}">
     <link rel="stylesheet" href="{{ asset($constants['CSSFILEPATH'].'setting-admin-users.css') }}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <!-- Add jQuery for simplicity -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -57,27 +58,80 @@
     Customize
 </button>
 <button id="filter"
-        class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-1 mr-2 hover:border-yellow-300">
+        class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-1 mr-2 hover:border-yellow-300 hidden">
     Filter
 </button>
-<div class="date-select flex items-center gap-2 focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded mr-2 hover:border-yellow-300">
+<div class="date-select flex items-center gap-2 focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded mr-2 hover:border-yellow-300 hidden">
     <input id="start-date" class="outline-none bg-gray-100 w-24 py-1 pl-2" datepicker datepicker-autohide type="text" placeholder="Select date start" readonly>
     <input id="start-time" type="time" class="outline-none bg-gray-100" min="09:00" max="18:00" value="00:00" required/>
 </div>
 
-<div class="date-select flex items-center gap-2 focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded mr-2 hover:border-yellow-300">
+<div class="date-select flex items-center gap-2 focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded mr-2 hover:border-yellow-300 hidden">
     <input id="end-date" class="outline-none bg-gray-100 w-24 py-1 pl-2" datepicker datepicker-autohide type="text" placeholder="Select date end" readonly>
     <input id="end-time" type="time" class="outline-none bg-gray-100" min="09:00" max="18:00" value="00:00" required/>
 </div>
             
 
 
-
-                    
-
   <a href="{{ route('export.operations') }}" class="btn btn-success" target="_blank">Export to Excel</a>
               
-
+<div class="dropdown inline-block relative">
+  <button class="flex items-center border rounded px-6 py-1 custom-outline data1" id="custom">
+    <span class="mr-1">Select Tag</span>
+    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+    </svg>
+  </button>
+  <ul class="dropdown-menu absolute text-gray-700 pt-2 shadow bg-custom-pure-white">
+    <li>
+      <a class="rounded-t custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="All">All</a>
+    </li>
+    <li class="dropdown-submenu group">
+      <a class="rounded-b custom-bg-hover py-2 px-4 block whitespace-no-wrap flex justify-between items-center" href="#">
+        File Operations
+        <svg class="fill-current h-4 w-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+        </svg>
+      </a>
+      <ul class="dropdown-content-sub group-hover:block text-gray-700 pt-2 shadow bg-custom-pure-white">
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="New Folder">New Folder</a></li>
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="New File">New File</a></li>
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="File Upload">File Upload</a></li>
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="Rename">Rename</a></li>
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="Edit File">Edit File</a></li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu group">
+      <a class="rounded-b custom-bg-hover py-2 px-4 block whitespace-no-wrap flex justify-between items-center" href="#">
+        User Configuration
+        <svg class="fill-current h-4 w-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+        </svg>
+      </a>
+      <ul class="dropdown-content-sub group-hover:block text-gray-700 pt-2 shadow bg-custom-pure-white">
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="Sign Up">Sign Up</a></li>
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="Log In">Log In</a></li>
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="Log Out">Log Out</a></li>
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="Modify Account">Modify Account</a></li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu group">
+      <a class="rounded-b custom-bg-hover py-2 px-4 block whitespace-no-wrap flex justify-between items-center" href="#">
+        Backend
+        <svg class="fill-current h-4 w-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+        </svg>
+      </a>
+      <ul class="dropdown-content-sub group-hover:block text-gray-700 pt-2 shadow bg-custom-pure-white">
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="Department Manage">Department Manage</a></li>
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="User Management">User Management</a></li>
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="Role Management">Role Management</a></li>
+        <li><a class="custom-bg-hover py-2 px-4 block whitespace-no-wrap" href="#" data-value="Document Right">Document Right</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+ 
     <!-- Dropdown menu -->
              <select class="flex items-center focus:border-yellow-500 dropdown-toggle border border-gray-300 rounded px-6 py-2 mr-2 hover:border-yellow-300  form-control roles_filter" id="sel1" name="roleID" id="roleID">
             <option value="">Please Select</option>
@@ -123,8 +177,7 @@
 
                         <tbody id="log-entries" id="userList">
                                 @foreach($log as $logs)
-             
-             
+                          
                                     
                             <tr class=" bg-white border-b dark:bg-gray-800 dark:border-gray-700">
 
@@ -134,7 +187,7 @@
                                     <span class="bg-gray-400 rounded-full px-2"></span> {{ $logs->user->name }}
                                 </th>
                                 <td class="px-6 py-4">
-                                   {{ $logs->created_at }}
+                                   {{ $logs->date }}
                                 </td>
                                                            
                                 <td class="px-6 py-4 flex items-center">
@@ -148,10 +201,10 @@
                                         </clipPath>
                                       </defs>
                                     </svg>
-                               {{ $logs->new_values }}
+                               {{ $logs->action }}
                                   </td>
                                 <td class="px-6 py-4">
-                                     {{ $logs->event }}
+                                     {{ $logs->details }}
 
                                 </td>
                                 <td class="px-6 py-4">
@@ -195,9 +248,43 @@
                     }
                 });
             });
+
+           
         });
     </script>
 
+    
+
+
+<script>
+$(document).ready(function() {
+  // Handle click event on each dropdown item
+  $('.dropdown-menu a, .dropdown-content-sub a').on('click', function(e) {
+    e.preventDefault(); // Prevent the default link behavior
+
+    // Get the value of the clicked item
+    var value = $(this).data('value');
+
+   // alert(value);
+    // Perform an AJAX request
+    $.ajax({
+      url: '{{ route("operationLogs.filter") }}', // Replace with your server endpoint
+      type: 'GET',
+      data: { tag: value },
+      success: function(response) {
+        // Handle the successful response here
+        $('#log-entries').html(response.html);
+      },
+      error: function(error) {
+        // Handle the error response here
+        console.log('Error:', error);
+      }
+    });
+  });
+});
+</script>
+
+</script>
        <script>
        $(document).ready(function() {
     $('#filter').click(function() {
@@ -252,7 +339,9 @@
     </script>
     
 <script type="text/javascript">
+   var filter = document.getElementById('filter');
     document.getElementById("customize").addEventListener("click",function(){
+            filter.classList.toggle("hidden")
           document.querySelectorAll(".date-select").forEach(function(element) {
             element.classList.toggle('hidden');
         });

@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Jenssegers\Agent\Agent;
 use Stevebauman\Location\Facades\Location;
+use App\Helpers\ActivityHelper;
 
 class LoginController extends Controller
 {
@@ -74,6 +75,8 @@ class LoginController extends Controller
             'browser_image' => $this->getBrowserImage($browser),
             'login_address' => $localIP,
         ]);
+
+         ActivityHelper::log('Log In', "$system $systemVersion $browser $browserVersion", 'India,');
     }
 
     private function getSystemImage($system)

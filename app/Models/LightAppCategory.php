@@ -2,12 +2,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class LightAppCategory extends Model implements Auditable
+
+class LightAppCategory extends Model 
 {
-	 use AuditableTrait;
+	 
 	 
     protected $fillable = ['name', 'sort_order', 'status'];
 

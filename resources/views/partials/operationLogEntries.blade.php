@@ -10,7 +10,7 @@
                                     <span class="bg-gray-400 rounded-full px-2"></span> {{ $logs->user->name }}
                                 </th>
                                 <td class="px-6 py-4">
-                                   {{ $logs->created_at }}
+                                   {{ $logs->date }}
                                 </td>
                                                            
                                 <td class="px-6 py-4 flex items-center">
@@ -24,10 +24,11 @@
                                         </clipPath>
                                       </defs>
                                     </svg>
-                               {{ $logs->new_values }}
+                               {{ $logs->action }}
                                   </td>
                                 <td class="px-6 py-4">
-                                     {{ $logs->event }}
+                                    {{ $logs->details }}
+
 
                                 </td>
                                 <td class="px-6 py-4">

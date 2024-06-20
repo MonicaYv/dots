@@ -132,7 +132,7 @@
                     </div>
                 </div>
 
-                <div class=" p-3 text-left text-sm mx-auto hidden bg-custom-light rounded-r-md" id="submenu-safety-control">
+                <div class=" p-3 text-left text-sm mx-auto  bg-custom-light rounded-r-md" id="submenu-safety-control">
                     <h4 class="relative cursor-pointer p-2 pl-4 text-black hover:bg-gray-900 rounded-r-md flex justify-between w-full items-center hover-color-custom-yellow active" onclick="setActive(this)">
                          <a href="{{ route('logs') }}"  class="flex items-center w-full">
                             <span class="text-[15px] ml-4">Login Log</span>
@@ -144,7 +144,7 @@
 
                    
                 </div>
-                <div class=" p-3 text-left text-sm mx-auto hidden bg-custom-light rounded-r-md" id="submenu-safety-control">
+                <div class=" p-3 text-left text-sm mx-auto  bg-custom-light rounded-r-md" id="submenu-safety-control">
                     <h4 class="relative cursor-pointer p-2 pl-4 text-black hover:bg-gray-900 rounded-r-md flex justify-between w-full items-center hover-color-custom-yellow active" onclick="setActive(this)">
                          <a href="{{ route('operation_logs') }}"  class="flex items-center w-full">
                             <span class="text-[15px] ml-4">Operation Log</span>

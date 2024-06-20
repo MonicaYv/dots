@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class App extends Model implements Auditable
+
+class App extends Model 
 {
-	 use AuditableTrait;
+	 
 	 
     protected $fillable = ['name', 'icon', 'sort_order', 'status'];
 }

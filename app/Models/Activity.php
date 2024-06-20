@@ -5,22 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Roles extends Model 
+class Activity extends Model
 {
     use HasFactory;
-     
 
     protected $fillable = [
-        'name',
-        'description',
-        'upload_limit',
-        'file_manage_settings',
-        'user_settings',
+        'user_id', 'date', 'action', 'details', 'address',
     ];
-    
+
     public function user()
     {
-        return $this->hasMany(Roles::class);
+        return $this->belongsTo(User::class);
     }
 }

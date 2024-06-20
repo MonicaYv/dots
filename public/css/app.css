@@ -27,7 +27,35 @@ border-top-left-radius: 100px;
   position: absolute;
   z-index: -1;
 }
+.dropdown-submenu {
+  position: relative;
+}
 
+.dropdown-content-sub {
+ display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  
+}
+
+.dropdown-menu{
+ display: none;
+  z-index: 1;
+  background-color: white;
+}
+
+
+.dropdown-submenu:hover .dropdown-content-sub{
+  display:block;
+}
+
+.dropdown:hover .dropdown-menu{
+    display: block;
+}
 .right-container input{
   padding: 4px;
   width: 100%;

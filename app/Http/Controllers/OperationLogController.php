@@ -11,6 +11,7 @@ use App\Models\Roles;
 use Carbon\Carbon;
 use App\Exports\OperationExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Activity;
 
 
 class OperationLogController extends Controller
@@ -18,7 +19,7 @@ class OperationLogController extends Controller
      public function index()
     {
     	
-        $log = AuditLog::with('user')->orderBy('created_at', 'desc')->paginate(8);
+        $log = Activity::with('user')->orderBy('created_at', 'desc')->paginate(8);
         $roles = Roles::get();
 
         return view('operationLog',compact('log', 'roles'));
@@ -27,9 +28,10 @@ class OperationLogController extends Controller
      public function filter(Request $request)
     {
         
-        $filter = $request->input('filter');
-        $query = AuditLog::with('user');
+        $filter = $request->input('filter'); 
+        $query = Activity::with('user');
         $roleId= @$request->roles?$request->roles:0;
+
 
         switch ($filter) {
             case 'today':
@@ -42,29 +44,34 @@ class OperationLogController extends Controller
                 $query->where('created_at', '>=', Carbon::today()->subDays(30));
                 break;
 
-                 case 'role':
-                if ($roleId) {
-                   $query->whereHas('user', function ($query) use ($roleId) {
-                $query->where('roleID', $roleId);
+                case 'role':
+        if ($roleId) {
+         $query->whereHas('user', function ($query) use ($roleId) {
+            $query->where('roleID', $roleId);
             });
-                }
-                
-                break;
+         }
+
+            break;
+
+                               
                  case 'dateTime':
    
-    $query->whereBetween('created_at', [
-    date('Y-m-d H:i:s', strtotime($request->start_date_time)),
-    date('Y-m-d H:i:s', strtotime($request->end_date_time))
+                $query->whereBetween('created_at', [
+                date('Y-m-d H:i:s', strtotime($request->start_date_time)),
+                date('Y-m-d H:i:s', strtotime($request->end_date_time))
 ]);
 
-    
-
-     break;
+         break;
 
             default:
                 break;
         }
 
+        $tag = $request->input('tag');
+
+        if($tag && $tag != 'All'){
+            $query->where('action', $tag);
+        }
     	
         $log = $query->take(7)->get();
 
@@ -76,7 +83,7 @@ class OperationLogController extends Controller
      public function export()
     {
           // Add some logging to check if this method is being called
-        \Log::info('LoginController export method called');
+        // \Log::info('LoginController export method called');
 
         return Excel::download(new OperationExport, 'operation.xlsx');
     }

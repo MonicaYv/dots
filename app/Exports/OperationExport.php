@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\AuditLog;
+use App\Models\Activity;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
@@ -16,8 +16,8 @@ class OperationExport implements FromCollection, WithHeadings
         // Add some logging to check if this method is being called
         \Log::info('OperationExport collection method called');
         
-        return AuditLog::join('users', 'audits.user_id', '=', 'users.id')
-            ->select('users.name as username', 'audits.created_at', 'audits.event', 'audits.new_values')
+        return Activity::join('users', 'activities.user_id', '=', 'users.id')
+            ->select('users.name as username', 'activities.date', 'activities.action', 'activities.details')
             ->get();
     }
 

@@ -4,14 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class Folder extends Model implements Auditable
+class Folder extends Model
 {
     use HasFactory;
-    use AuditableTrait;
-
+    
     protected $fillable = [
         'folder',
         'name',
