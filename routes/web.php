@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LightAppController;
 use App\Http\Controllers\FileManagerController;
+use App\Http\Controllers\CloudStorageController;
 
 
 
@@ -77,6 +78,7 @@ Route::get('/permissionsList', [App\Http\Controllers\PermissionsController::clas
 //group routes
 Route::get('/groups', [App\Http\Controllers\GroupController::class, 'index'])->name('groups');
 Route::get('/groups/{id}', [App\Http\Controllers\GroupController::class, 'index']);
+Route::get('/group/{name}', [App\Http\Controllers\UserController::class, 'find'])->name('group-find');
 Route::get('/group-add', [App\Http\Controllers\GroupController::class, 'add'])->name('group-add');
 Route::post('/group-create', [App\Http\Controllers\GroupController::class, 'create'])->name('group-create');
 Route::get('/group-edit', [App\Http\Controllers\GroupController::class, 'edit'])->name('group-edit');
@@ -97,4 +99,4 @@ Route::get('/cloudStoreS3list', [CloudStorageController::class, 'list'])->name('
 Route::get('/getFileFromS3/{file}', [CloudStorageController::class, 'getFileContent'])->name('cloudstore-s3-getfile');
 Route::get('/deleteFileFromS3', [CloudStorageController::class, 'delete'])->name('cloudstore-s3-delete');
 Route::post('/cloudStoreS3CreateFile', [CloudStorageController::class, 'createFile'])->name('cloudstore-s3-create-file');
-
+Route::get('/getFileContent/', [CloudStorageController::class, 'getFileData'])->name('cloudstore-s3-getfilecontent');

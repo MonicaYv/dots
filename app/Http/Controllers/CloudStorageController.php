@@ -17,7 +17,7 @@ class CloudStorageController extends Controller
     public function index()
     {
         //to get all files
-        $content = Storage::allFiles('');
+        $content = Storage::disk('s3')->allFiles('');
         //to get specific file
         //$content = Storage::get($file_name);
         
@@ -27,7 +27,7 @@ class CloudStorageController extends Controller
     public function list()
     {
         //to get all files
-        $content = Storage::allFiles('');
+        $content = Storage::disk('s3')->allFiles('');
         
         dd($content);
         //return view('cloudstorage')->with('contents',$content);
@@ -38,8 +38,8 @@ class CloudStorageController extends Controller
     public function createFile(Request $request)
     {
           $file_name = $request->file_name;
-          $file_content = '';
-          $done = Storage::put($file_name, $file_content);
+          $file_content = 'Dynamically added data';
+          $done = Storage::disk('s3')->put($file_name, $file_content);
 
           if($done)
             return redirect()->route('cloudstore-s3-list');  
@@ -49,7 +49,7 @@ class CloudStorageController extends Controller
 
     public function createFolder($foldername)
     {
-          $done = Storage::put($foldername,'');
+          $done = Storage::disk('s3')->put($foldername,'');
 
           if($done)
             return redirect()->route('cloudstore-s3-list');
@@ -61,7 +61,7 @@ class CloudStorageController extends Controller
     {
           $foldername = $parentFolder.'/'.$foldername;
           //$done = Storage::put($foldername,'');
-          $done = Storage::makeDirectory($foldername);
+          $done = Storage::disk('s3')->makeDirectory($foldername);
 
           if($done)
             return redirect()->route('cloudstore-s3-list');
@@ -72,17 +72,29 @@ class CloudStorageController extends Controller
     public function getFileContent($file)
     {     
             //to get specific file
-        $content = Storage::get($file);
+        $content = Storage::disk('s3')->get($file);
 
         dd($content);
 
     }
 
+    public function getFileData(Request $request)
+    {    
+
+        $file = $request->file; 
+            //to get specific file
+        $content = Storage::disk('s3')->get($file);
+
+        $files = view('appendview.filecontent')->with('content',$content)->render();
+        return response()->json($files);
+
+    }
+
     public function delete(Request $request)
     {     
-      $file = $request->file;
+        $file = $request->file;
             //to get specific file
-        $done = Storage::delete($file);
+        $done = Storage::disk('s3')->delete($file);
 
         if($done)
             return redirect()->route('cloudstore-s3-list');
